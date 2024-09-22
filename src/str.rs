@@ -1,7 +1,6 @@
 use std::{
-    iter::Map,
-    ops::{Add, Div, Mul},
-    str::Split,
+    fmt::Display,
+    ops::{Add, Div},
 };
 
 fn print_type<T>(_: T) {
@@ -14,6 +13,11 @@ impl Add<Str> for Str {
     type Output = Str;
     fn add(self, rhs: Self) -> Self::Output {
         Str(format!("{}{}", self.0, rhs.0))
+    }
+}
+impl Display for Str {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0)
     }
 }
 impl Div<Str> for Str {
