@@ -8,7 +8,7 @@ fn print_type<T>(_: T) {
 }
 
 #[derive(Debug, Clone)]
-pub struct Str(String);
+pub struct Str(pub String);
 impl Add<Str> for Str {
     type Output = Str;
     fn add(self, rhs: Self) -> Self::Output {
