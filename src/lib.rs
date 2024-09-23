@@ -8,54 +8,58 @@ pub mod str;
 
 use std::fmt::Display;
 
-pub trait printTrait<T>
+pub trait printTrait
 where
-    T: Display,
+    Self: Display,
 {
     type Output = ();
-    fn print(val: T) -> () {
-        println!("{}", val);
+    fn print(&self) -> () {
+        println!("{}", self);
     }
 }
 
 use std::ops::{Add, Div, Mul, Sub};
 
-pub trait addTrait<A, B>
+pub trait addTrait<T>
 where
-    A: Add<B>,
+    Self: Clone,
+    Self: Add<T>,
 {
-    type Output = <A as Add<B>>::Output;
-    fn add(lhs: A, rhs: B) -> <A as Add<B>>::Output {
-        lhs + rhs
+    type Output = <Self as Add<T>>::Output;
+    fn add(&self, rhs: T) -> <Self as Add<T>>::Output {
+        self.clone() + rhs
     }
 }
 
-pub trait subTrait<A, B>
+pub trait subTrait<T>
 where
-    A: Sub<B>,
+    Self: Clone,
+    Self: Sub<T>,
 {
-    type Output = <A as Sub<B>>::Output;
-    fn sub(lhs: A, rhs: B) -> <A as Sub<B>>::Output {
-        lhs - rhs
+    type Output = <Self as Sub<T>>::Output;
+    fn sub(&self, rhs: T) -> <Self as Sub<T>>::Output {
+        self.clone() - rhs
     }
 }
 
-pub trait mulTrait<A, B>
+pub trait mulTrait<T>
 where
-    A: Mul<B>,
+    Self: Clone,
+    Self: Mul<T>,
 {
-    type Output = <A as Mul<B>>::Output;
-    fn mul(lhs: A, rhs: B) -> <A as Mul<B>>::Output {
-        lhs * rhs
+    type Output = <Self as Mul<T>>::Output;
+    fn mul(&self, rhs: T) -> <Self as Mul<T>>::Output {
+        self.clone() * rhs
     }
 }
 
-pub trait divTrait<A, B>
+pub trait divTrait<T>
 where
-    A: Div<B>,
+    Self: Clone,
+    Self: Div<T>,
 {
-    type Output = <A as Div<B>>::Output;
-    fn div(lhs: A, rhs: B) -> <A as Div<B>>::Output {
-        lhs / rhs
+    type Output = <Self as Div<T>>::Output;
+    fn div(&self, rhs: T) -> <Self as Div<T>>::Output {
+        self.clone() / rhs
     }
 }
