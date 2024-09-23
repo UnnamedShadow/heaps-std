@@ -26,8 +26,8 @@ where
     Self: Add<T>,
 {
     type Output = <Self as Add<T>>::Output;
-    fn add(&self, rhs: T) -> <Self as Add<T>>::Output {
-        self.clone() + rhs
+    fn add(self, rhs: T) -> <Self as Add<T>>::Output {
+        self + rhs
     }
 }
 
@@ -37,8 +37,8 @@ where
     Self: Sub<T>,
 {
     type Output = <Self as Sub<T>>::Output;
-    fn sub(&self, rhs: T) -> <Self as Sub<T>>::Output {
-        self.clone() - rhs
+    fn sub(self, rhs: T) -> <Self as Sub<T>>::Output {
+        self - rhs
     }
 }
 
@@ -48,8 +48,8 @@ where
     Self: Mul<T>,
 {
     type Output = <Self as Mul<T>>::Output;
-    fn mul(&self, rhs: T) -> <Self as Mul<T>>::Output {
-        self.clone() * rhs
+    fn mul(self, rhs: T) -> <Self as Mul<T>>::Output {
+        self * rhs
     }
 }
 
@@ -59,7 +59,7 @@ where
     Self: Div<T>,
 {
     type Output = <Self as Div<T>>::Output;
-    fn div(&self, rhs: T) -> <Self as Div<T>>::Output {
-        self.clone() / rhs
+    fn div(self, rhs: T) -> <Self as Div<T>>::Output {
+        self / rhs
     }
 }
