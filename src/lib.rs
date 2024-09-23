@@ -1,4 +1,5 @@
 #![feature(adt_const_params)]
+#![feature(associated_type_defaults)]
 
 mod raw_num;
 
@@ -7,78 +8,54 @@ pub mod str;
 
 use std::fmt::Display;
 
-pub trait printTrait {
-    type Output;
-    fn print(&self) -> Self::Output;
-}
-impl<T> printTrait for T
+pub trait printTrait<T>
 where
     T: Display,
 {
     type Output = ();
-    fn print(&self) -> Self::Output {
-        print!("{}", self);
+    fn print(val: T) -> () {
+        println!("{}", val);
     }
 }
 
 use std::ops::{Add, Div, Mul, Sub};
 
-pub trait addTrait<T> {
-    type Output;
-    fn add(&self, rhs: T) -> Self::Output;
-}
-impl<T, U, O> addTrait<T> for U
+pub trait addTrait<A, B>
 where
-    U: Clone,
-    U: Add<T, Output = O>,
+    A: Add<B>,
 {
-    type Output = O;
-    fn add(&self, rhs: T) -> Self::Output {
-        self.clone() + rhs
+    type Output = <A as Add<B>>::Output;
+    fn add(lhs: A, rhs: B) -> <A as Add<B>>::Output {
+        lhs + rhs
     }
 }
 
-pub trait subTrait<T> {
-    type Output;
-    fn sub(&self, rhs: T) -> Self::Output;
-}
-impl<T, U, O> subTrait<T> for U
+pub trait subTrait<A, B>
 where
-    U: Clone,
-    U: Sub<T, Output = O>,
+    A: Sub<B>,
 {
-    type Output = O;
-    fn sub(&self, rhs: T) -> Self::Output {
-        self.clone() - rhs
+    type Output = <A as Sub<B>>::Output;
+    fn sub(lhs: A, rhs: B) -> <A as Sub<B>>::Output {
+        lhs - rhs
     }
 }
 
-pub trait mulTrait<T> {
-    type Output;
-    fn mul(&self, rhs: T) -> Self::Output;
-}
-impl<T, U, O> mulTrait<T> for U
+pub trait mulTrait<A, B>
 where
-    U: Clone,
-    U: Mul<T, Output = O>,
+    A: Mul<B>,
 {
-    type Output = O;
-    fn mul(&self, rhs: T) -> Self::Output {
-        self.clone() * rhs
+    type Output = <A as Mul<B>>::Output;
+    fn mul(lhs: A, rhs: B) -> <A as Mul<B>>::Output {
+        lhs * rhs
     }
 }
 
-pub trait divTrait<T> {
-    type Output;
-    fn div(&self, rhs: T) -> Self::Output;
-}
-impl<T, U, O> divTrait<T> for U
+pub trait divTrait<A, B>
 where
-    U: Clone,
-    U: Div<T, Output = O>,
+    A: Div<B>,
 {
-    type Output = O;
-    fn div(&self, rhs: T) -> Self::Output {
-        self.clone() / rhs
+    type Output = <A as Div<B>>::Output;
+    fn div(lhs: A, rhs: B) -> <A as Div<B>>::Output {
+        lhs / rhs
     }
 }
