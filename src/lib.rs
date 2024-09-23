@@ -1,6 +1,3 @@
-#![feature(adt_const_params)]
-#![feature(associated_type_defaults)]
-
 mod raw_num;
 
 pub mod num;
@@ -8,58 +5,75 @@ pub mod str;
 
 use std::fmt::Display;
 
-pub trait printTrait
+pub trait printTrait {
+    type Output;
+    fn print(&self) -> Self::Output;
+}
+impl<T> printTrait for T
 where
-    Self: Display,
+    T: Display,
 {
     type Output = ();
-    fn print(&self) -> () {
+    fn print(&self) -> Self::Output {
         println!("{}", self);
     }
 }
 
 use std::ops::{Add, Div, Mul, Sub};
 
-pub trait addTrait<T>
+pub trait addTrait<T> {
+    type Output;
+    fn add(self, rhs: T) -> Self::Output;
+}
+
+impl<T, R> addTrait<R> for T
 where
-    Self: Clone,
-    Self: Add<T>,
+    T: Add<R>,
 {
-    type Output = <Self as Add<T>>::Output;
-    fn add(self, rhs: T) -> <Self as Add<T>>::Output {
+    type Output = <T as Add<R>>::Output;
+    fn add(self, rhs: R) -> Self::Output {
         self + rhs
     }
 }
 
-pub trait subTrait<T>
+pub trait subTrait<T> {
+    type Output;
+    fn sub(self, rhs: T) -> Self::Output;
+}
+impl<T, R> subTrait<R> for T
 where
-    Self: Clone,
-    Self: Sub<T>,
+    T: Sub<R>,
 {
-    type Output = <Self as Sub<T>>::Output;
-    fn sub(self, rhs: T) -> <Self as Sub<T>>::Output {
+    type Output = <T as Sub<R>>::Output;
+    fn sub(self, rhs: R) -> Self::Output {
         self - rhs
     }
 }
 
-pub trait mulTrait<T>
+pub trait mulTrait<T> {
+    type Output;
+    fn mul(self, rhs: T) -> Self::Output;
+}
+impl<T, R> mulTrait<R> for T
 where
-    Self: Clone,
-    Self: Mul<T>,
+    T: Mul<R>,
 {
-    type Output = <Self as Mul<T>>::Output;
-    fn mul(self, rhs: T) -> <Self as Mul<T>>::Output {
+    type Output = <T as Mul<R>>::Output;
+    fn mul(self, rhs: R) -> Self::Output {
         self * rhs
     }
 }
 
-pub trait divTrait<T>
+pub trait divTrait<T> {
+    type Output;
+    fn div(self, rhs: T) -> Self::Output;
+}
+impl<T, R> divTrait<R> for T
 where
-    Self: Clone,
-    Self: Div<T>,
+    T: Div<R>,
 {
-    type Output = <Self as Div<T>>::Output;
-    fn div(self, rhs: T) -> <Self as Div<T>>::Output {
+    type Output = <T as Div<R>>::Output;
+    fn div(self, rhs: R) -> Self::Output {
         self / rhs
     }
 }
